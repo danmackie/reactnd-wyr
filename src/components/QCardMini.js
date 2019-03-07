@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col } from 'reactstrap';
 import { formatDate } from '../utils/helpers';
 
-
-
-//TODO: Style
 const QCardMini = props => {
 
   const { question, avatarURL, username, answered } = props
@@ -16,19 +13,9 @@ const QCardMini = props => {
   //   handleClickCallback(question, answered)
   // }
 
-  const handleMouseEnter = () => {
-    //TODO: Mouseenter UX - highlight
-  }
-
-  const handleMouseLeave = () => {
-    //TODO: Mouseleave UX - lowlight
-  }
-
-
   return (
 
     <Card align='left' style={{ marginTop: '2em', marginBottom: '2em' }}>
-      {/* <CardImg alt={question.author} top src={`../${avatarURL}`} /> */}
       <CardHeader>
         <Col className='my-auto'>
           <img
@@ -50,10 +37,11 @@ const QCardMini = props => {
       <CardFooter align='center'>
         <Button
           tag={Link}
+          size="lg"
           to={`/questions/${question.id}`}
           outline color={answered ? `primary` : `success`}
         >
-          {answered ? `Vote!` : `See votes`}
+          {answered ? `See votes` : `Vote!`}
         </Button>
       </CardFooter>
     </Card >
@@ -62,17 +50,3 @@ const QCardMini = props => {
 }
 
 export default QCardMini;
-
-{/* <Link to={`/questions/${question.id}`}></Link> */ }
-{/* <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      // onClick={handleClick}
-      >
-        <img height='30px' alt={question.author} width='30px' src={`../${avatarURL}`} />
-        <h4>{formatDate(question.timestamp)}</h4>
-        <h4>{question.optionOne.text}</h4>
-        <p>OR</p>
-        <h4>{question.optionTwo.text}</h4>
-        <hr />
-      </div> */}

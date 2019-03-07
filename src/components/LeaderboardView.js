@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { Col, Row } from 'reactstrap';
 import UserLeaderboardCard from './UserLeaderboardCard';
 
-//TODO: Style
 const LeaderboardView = props => {
 
   const { users } = props

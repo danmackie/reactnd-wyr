@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-
+import React, { Component, Fragment } from 'react';
+import { Button, Card, CardBody, CardHeader, CardText, Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 //TODO: 
 // The new polling question appears in the correct category on the home page.
-
-//TODO: Style
 class NewQuestionView extends Component {
 
   state = {
@@ -40,39 +37,74 @@ class NewQuestionView extends Component {
   }
 
   render() {
-
+    const { handleReturnClose } = this.props
     return (
-      <Col align='center'>
-        <h2>Would You Rather</h2>
-
-        <Form onSubmit={this.handleSubmitQuestion}>
-          <Row form>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="optionOne">Option 1</Label>
-                <Input
-                  type="text"
-                  onChange={this.updateField}
-                  name="optionOne"
-                  id="optionOne"
-                  placeholder="Add your first option..." />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Label for="optionTwo">Option 2</Label>
-                <Input
-                  onChange={this.updateField}
-                  type="text"
-                  name="optionTwo"
-                  id="optionTwo"
-                  placeholder="Add your second option..." />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Button color="info" disabled={!this.state.cansubmit}>Add it</Button>
-        </Form>
-      </Col>
+      <Fragment>
+        <Row align='center'>
+          <Col sm="12" md={{ size: 8, offset: 2 }}>
+            <Button onClick={handleReturnClose} close />
+            <Card style={{ marginTop: '2em', marginBottom: '2em' }}>
+              <CardHeader>
+                <Col className='my-auto'>
+                  <h2>Would You Rather</h2>
+                </Col>
+              </CardHeader>
+              <CardBody align='center'>
+                <Form onSubmit={this.handleSubmitQuestion}>
+                  <Row>
+                    <Col style={{ padding: '20px', margin: '20px' }} className='my-auto'>
+                      <FormGroup>
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>Option 1</InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            onChange={this.updateField}
+                            name="optionOne"
+                            id="optionOne"
+                            placeholder="Add your first option..."
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <CardText style={{ fontSize: '1.3em', fontWeight: '600' }}> ~ OR ~ </CardText>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col style={{ padding: '20px', margin: '20px' }} className='my-auto'>
+                      <FormGroup>
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>Option 2</InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            onChange={this.updateField}
+                            name="optionTwo"
+                            id="optionTwo"
+                            placeholder="Add your second option..."
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Button
+                        size="lg"
+                        color="warning"
+                        disabled={!this.state.cansubmit}>Add your question
+                     </Button>
+                    </Col>
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Fragment >
     );
   }
 }

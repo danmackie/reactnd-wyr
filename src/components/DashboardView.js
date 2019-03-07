@@ -4,7 +4,6 @@ import { Button, ButtonGroup, CardColumns, Col, Row } from 'reactstrap';
 import { avatartocircular } from '../utils/helpers';
 import QCardMini from './QCardMini';
 
-//TODO:Style
 class DashboardView extends Component {
 
   state = {
@@ -32,8 +31,8 @@ class DashboardView extends Component {
         <Row>
           <Col align='center'>
             <ButtonGroup>
-              <Button outline color="primary" onClick={this.handleToggleQuestions} active={this.state.showingUnanswered}>Unanswered</Button>
-              <Button outline color="success" onClick={this.handleToggleQuestions} active={!this.state.showingUnanswered}>Answered</Button>
+              <Button outline color="primary" onClick={this.handleToggleQuestions} active={this.state.showingUnanswered}>Answered</Button>
+              <Button outline color="success" onClick={this.handleToggleQuestions} active={!this.state.showingUnanswered}>Unanswered</Button>
             </ButtonGroup>
           </Col>
         </Row>

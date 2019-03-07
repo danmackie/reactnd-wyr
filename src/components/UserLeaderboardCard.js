@@ -2,7 +2,6 @@ import React from 'react';
 import { Badge, Col, Row } from 'reactstrap';
 import { avatartocircular } from '../utils/helpers';
 
-//TODO: Style
 const UserLeaderboardCard = props => {
 
   const { avatarURL, name, answers, questions } = props.user

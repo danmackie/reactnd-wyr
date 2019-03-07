@@ -13,7 +13,6 @@ import Navigation from './Navigation';
 import NewQuestionView from './NewQuestionView';
 import QuestionView from './QuestionView';
 
-
 class App extends Component {
 
   componentDidMount() {
@@ -40,6 +39,8 @@ class App extends Component {
 
   handleSubmitNewQuestion = (optionOneText, optionTwoText) => {
     const { dispatch, authedUser } = this.props
+    console.log('NEW Q: ', optionOneText, optionOneText, authedUser);
+
     dispatch(handleAddQuestion({ optionOneText, optionTwoText, author: authedUser }))
   }
 
@@ -68,6 +69,7 @@ class App extends Component {
                     }}
                   />
                 )} />
+                {/* <Route path='/questions/:id' component={QuestionView} /> */}
                 <Route path='/questions/:id' render={(props) => <QuestionView
                   handleReturn={() => {
                     this.handleReturnFromQuestion(props)
@@ -79,6 +81,7 @@ class App extends Component {
                       this.handleSubmitNewQuestion(t1, t2)
                       history.push('/')
                     }}
+                    handleReturnClose={() => { history.push('/') }}
                   />
                 )} />
                 <Route path='/leaderboard' render={({ history }) => (
