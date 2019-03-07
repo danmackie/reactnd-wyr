@@ -31,8 +31,8 @@ class DashboardView extends Component {
         <Row>
           <Col align='center'>
             <ButtonGroup>
-              <Button outline color="primary" onClick={this.handleToggleQuestions} active={this.state.showingUnanswered}>Answered</Button>
-              <Button outline color="success" onClick={this.handleToggleQuestions} active={!this.state.showingUnanswered}>Unanswered</Button>
+              <Button outline color="success" onClick={this.handleToggleQuestions} active={this.state.showingUnanswered}>Unanswered</Button>
+              <Button outline color="primary" onClick={this.handleToggleQuestions} active={!this.state.showingUnanswered}>Answered</Button>
             </ButtonGroup>
           </Col>
         </Row>
@@ -40,21 +40,6 @@ class DashboardView extends Component {
           <Col>
             {this.state.showingUnanswered
               ?
-              <CardColumns>
-                {answeredQs.map((question) => (
-                  <Col key={question.id}>
-                    <QCardMini
-                      key={question.id}
-                      question={question}
-                      answered={true}
-                      avatarURL={avatartocircular(users[question.author].avatarURL)}
-                      username={users[question.author].name}
-                    // handleClickCallback={this.handleClickCallback}
-                    />
-                  </Col>
-                ))}
-              </CardColumns>
-              :
               <CardColumns>
                 {unansweredQs.map((question) => (
                   <Col key={question.id}>
@@ -65,6 +50,21 @@ class DashboardView extends Component {
                       avatarURL={users[question.author].avatarURL}
                       username={users[question.author].name}
                     // handleClickCallback={this.handleClickCallback} 
+                    />
+                  </Col>
+                ))}
+              </CardColumns>
+              :
+              <CardColumns>
+                {answeredQs.map((question) => (
+                  <Col key={question.id}>
+                    <QCardMini
+                      key={question.id}
+                      question={question}
+                      answered={true}
+                      avatarURL={avatartocircular(users[question.author].avatarURL)}
+                      username={users[question.author].name}
+                    // handleClickCallback={this.handleClickCallback}
                     />
                   </Col>
                 ))}
