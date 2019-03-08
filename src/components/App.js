@@ -7,6 +7,7 @@ import { setAuthedUser } from '../actions/authedUser';
 import { handleAddQuestion } from '../actions/questions';
 import { handleInitialData } from '../actions/shared';
 import DashboardView from './DashboardView';
+import FourohfourView from './FourohfourView';
 import LeaderboardView from './LeaderboardView';
 import LoginView from './LoginView';
 import Navigation from './Navigation';
@@ -93,6 +94,7 @@ class App extends Component {
                       }}
                     />
                   )} />
+                  <Route component={FourohfourView} />
                 </Switch>
               </Fragment>
             }

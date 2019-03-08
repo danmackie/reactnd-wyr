@@ -45,16 +45,17 @@ class QuestionView extends Component {
   getVotes = (votesA, votesB) => {
     let votesPercent = votesA.length === 0
       ? 'None'
-      : `${votesA.length} - ${Math.round((votesA.length / (votesA.length + votesB.length)) * 100)} %`
+      : `${votesA.length} (${Math.round((votesA.length / (votesA.length + votesB.length)) * 100)}%)`
     return votesPercent
   }
 
   render() {
 
-    const { question, user, authedUser, handleReturn, avatarURL } = this.props
+    const { question, user, authedUser, handleReturn, avatarURL, auURL } = this.props
     const votesOne = question.optionOne.votes
     const votesTwo = question.optionTwo.votes
     const answered = votesOne.includes(authedUser) || votesTwo.includes(authedUser);
+    const authedUserVote = votesOne.includes(authedUser) ? '1' : '2';
 
     return (
       <Fragment>
@@ -89,8 +90,17 @@ class QuestionView extends Component {
                           style={{ paddingLeft: '20px', paddingRight: '20px', paddingBottom: '10px' }}
                         ><span role='img' name='optionOne' aria-label='Vote'>👍</span></Button>
                       </form>
-                      : <Col>
+                      : <Col className='my-auto'>
                         <span style={{ fontSize: '1.4em', fontWeight: '600' }}>Votes: <Badge pill color="primary">{this.getVotes(votesOne, votesTwo)}</Badge></span>
+                        {authedUserVote === '1' &&
+                          <img
+                            height='30px'
+                            width='30px'
+                            alt={authedUser}
+                            src={`../${auURL}`}
+                            style={{ marginLeft: '5px', marginTop: '-5px' }}
+                          />
+                        }
                       </Col>
                     }
                   </Col>
@@ -109,8 +119,16 @@ class QuestionView extends Component {
                           style={{ paddingLeft: '20px', paddingRight: '20px', paddingBottom: '10px' }}
                         ><span name='optionTwo' role='img' aria-label='Vote'>👍</span></Button>
                       </form>
-                      : <Col>
+                      : <Col className='my-auto'>
                         <span style={{ fontSize: '1.4em', fontWeight: '600' }}>Votes: <Badge pill color="primary">{this.getVotes(votesTwo, votesOne)}</Badge></span>
+                        {authedUserVote === '2' &&
+                          <img
+                            height='30px'
+                            width='30px'
+                            alt={authedUser}
+                            style={{ marginLeft: '5px', marginTop: '-5px' }}
+                            src={`../${auURL}`} />
+                        }
                       </Col>
                     }
                   </Col>
@@ -128,13 +146,16 @@ function mapStateToProps({ authedUser, questions, users }, props) {
   const { id } = props.match.params
   // console.log('props = ', props);
   const user = users[questions[id].author]
+  const auObject = users[authedUser]
   const aURL = avatartocircular(user.avatarURL)
+  const auURL = avatartocircular(auObject.avatarURL)
   return {
     qid: id,
     authedUser,
     user: user,
     avatarURL: aURL,
     question: questions[id],
+    auURL: auURL,
     // handleReturn: props.handleReturn
   }
 }
