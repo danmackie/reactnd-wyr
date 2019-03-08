@@ -23,12 +23,12 @@ class DashboardView extends Component {
 
   render() {
 
-    const { unansweredQs, answeredQs, users } = this.props
+    const { unansweredQs, answeredQs, users, authedUser } = this.props
 
     return (
 
       <Fragment>
-        <Row>
+        <Row style={{ padding: '20px' }}>
           <Col align='center'>
             <ButtonGroup>
               <Button outline color="success" onClick={this.handleToggleQuestions} active={this.state.showingUnanswered}>Unanswered</Button>
@@ -49,6 +49,7 @@ class DashboardView extends Component {
                       answered={false}
                       avatarURL={users[question.author].avatarURL}
                       username={users[question.author].name}
+                      loggedin={authedUser !== ''}
                     // handleClickCallback={this.handleClickCallback} 
                     />
                   </Col>
@@ -64,6 +65,7 @@ class DashboardView extends Component {
                       answered={true}
                       avatarURL={avatartocircular(users[question.author].avatarURL)}
                       username={users[question.author].name}
+                      loggedin={authedUser !== ''}
                     // handleClickCallback={this.handleClickCallback}
                     />
                   </Col>

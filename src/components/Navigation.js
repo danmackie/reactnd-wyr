@@ -16,22 +16,27 @@ class Navigation extends Component {
     });
   }
 
+  getLinkClassName = () => {
+    const { authedUser } = this.props
+    return authedUser !== "" ? "nav-link" : "nav-link disabled"
+  }
+
   render() {
 
     const { authedUser, avatarURL, handleLogout, username } = this.props
-    console.log(authedUser, avatarURL, handleLogout, username);
+    // console.log(authedUser, avatarURL, handleLogout, username);
 
     return (
-      <Navbar color="inverse" light expand="md">
+      <Navbar color="inverse" light expand="md" style={{ padding: '20px' }}>
         <NavbarBrand tag={Link} to="/">Would you rather?</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink tag={Link} to="/new">New</NavLink>
+              <NavLink tag={Link} to="/new" disabled={authedUser === ''}>New</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/leaderboard">Leaderboard</NavLink>
+              <NavLink tag={Link} to="/leaderboard" disabled={authedUser === ''}>Leaderboard</NavLink>
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar>

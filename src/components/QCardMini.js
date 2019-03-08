@@ -5,7 +5,7 @@ import { formatDate } from '../utils/helpers';
 
 const QCardMini = props => {
 
-  const { question, avatarURL, username, answered } = props
+  const { question, avatarURL, username, answered, loggedin } = props
   // const { question, answered, handleClickCallback } = props
 
   // const handleClick = (e) => {
@@ -35,14 +35,25 @@ const QCardMini = props => {
         <CardText><strong>2: </strong>{question.optionTwo.text}</CardText>
       </CardBody>
       <CardFooter align='center'>
-        <Button
-          tag={Link}
-          size="lg"
-          to={`/questions/${question.id}`}
-          outline color={answered ? `primary` : `success`}
-        >
-          {answered ? `See votes` : `Vote!`}
-        </Button>
+        {loggedin
+          ?
+          <Button
+            tag={Link}
+            size="lg"
+            to={`/questions/${question.id}`}
+            outline color={answered ? `primary` : `success`}
+          >
+            {answered ? `See votes` : `Vote!`}
+          </Button>
+          :
+          <Button
+            tag={Link}
+            to={`/login`}
+            outline color='info'
+          >
+            Log in for votes
+          </Button>
+        }
       </CardFooter>
     </Card >
 

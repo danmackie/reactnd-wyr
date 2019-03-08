@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { setAuthedUser } from '../actions/authedUser';
 import { handleAddQuestion } from '../actions/questions';
@@ -11,6 +11,7 @@ import LeaderboardView from './LeaderboardView';
 import LoginView from './LoginView';
 import Navigation from './Navigation';
 import NewQuestionView from './NewQuestionView';
+import ProtectedRoute from './ProtectedRoute';
 import QuestionView from './QuestionView';
 
 class App extends Component {
@@ -39,8 +40,6 @@ class App extends Component {
 
   handleSubmitNewQuestion = (optionOneText, optionTwoText) => {
     const { dispatch, authedUser } = this.props
-    console.log('NEW Q: ', optionOneText, optionOneText, authedUser);
-
     dispatch(handleAddQuestion({ optionOneText, optionTwoText, author: authedUser }))
   }
 
@@ -60,39 +59,41 @@ class App extends Component {
               :
               <Fragment>
                 <Navigation authedUser={this.props.authedUser} username={name} avatarURL={avatarURL} handleLogout={this.handleLogout} />
-                <Route path='/' exact component={DashboardView} />
-                <Route path='/login' render={({ history }) => (
-                  <LoginView
+                <Switch>
+                  <Route exact path='/' component={DashboardView} />
+                  <Route path='/login' render={({ history }) => (
+                    <LoginView
+                      handleReturn={() => {
+                        this.handleReturnFromLogin()
+                        history.push('/')
+                      }}
+                    />
+                  )} />
+                  {/* <Route path='/questions/:id' component={QuestionView} /> */}
+                  <ProtectedRoute allowed={authedUser !== ''} path='/questions/:id' render={(props) => <QuestionView
                     handleReturn={() => {
-                      this.handleReturnFromLogin()
-                      history.push('/')
+                      this.handleReturnFromQuestion(props)
                     }}
-                  />
-                )} />
-                {/* <Route path='/questions/:id' component={QuestionView} /> */}
-                <Route path='/questions/:id' render={(props) => <QuestionView
-                  handleReturn={() => {
-                    this.handleReturnFromQuestion(props)
-                  }}
-                  {...props} />} />
-                <Route path='/new' render={({ history }) => (
-                  <NewQuestionView
-                    handleReturn={(t1, t2) => {
-                      this.handleSubmitNewQuestion(t1, t2)
-                      history.push('/')
-                    }}
-                    handleReturnClose={() => { history.push('/') }}
-                  />
-                )} />
-                <Route path='/leaderboard' render={({ history }) => (
-                  <LeaderboardView
-                    users={users}
-                    handleReturn={() => {
-                      this.handleReturnFromLeaderboard()
-                      history.push('/')
-                    }}
-                  />
-                )} />
+                    {...props} />} />
+                  <ProtectedRoute path='/new' allowed={authedUser !== ''} render={({ history }) => (
+                    <NewQuestionView
+                      handleReturn={(t1, t2) => {
+                        this.handleSubmitNewQuestion(t1, t2)
+                        history.push('/')
+                      }}
+                      handleReturnClose={() => { history.push('/') }}
+                    />
+                  )} />
+                  <ProtectedRoute path='/leaderboard' allowed={authedUser !== ''} render={({ history }) => (
+                    <LeaderboardView
+                      users={users}
+                      handleReturn={() => {
+                        this.handleReturnFromLeaderboard()
+                        history.push('/')
+                      }}
+                    />
+                  )} />
+                </Switch>
               </Fragment>
             }
           </Container>
