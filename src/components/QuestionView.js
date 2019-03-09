@@ -43,7 +43,7 @@ class QuestionView extends Component {
   }
 
   getVotes = (votesA, votesB) => {
-    let votesPercent = votesA.length === 0
+    const votesPercent = votesA.length === 0
       ? 'None'
       : `${votesA.length} (${Math.round((votesA.length / (votesA.length + votesB.length)) * 100)}%)`
     return votesPercent

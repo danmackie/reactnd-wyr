@@ -51,7 +51,8 @@ class App extends Component {
     const name = users[authedUser] !== undefined ? users[authedUser].name : ''
 
     return (
-      <Router>
+
+      < Router >
         <Fragment>
           <LoadingBar />
           <Container>
@@ -87,7 +88,7 @@ class App extends Component {
                   )} />
                   <ProtectedRoute path='/leaderboard' allowed={authedUser !== ''} render={({ history }) => (
                     <LeaderboardView
-                      users={users}
+                      // users={users}
                       handleReturn={() => {
                         this.handleReturnFromLeaderboard()
                         history.push('/')
@@ -100,7 +101,7 @@ class App extends Component {
             }
           </Container>
         </Fragment>
-      </Router>
+      </Router >
     );
   }
 }
