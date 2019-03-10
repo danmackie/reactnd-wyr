@@ -21,8 +21,15 @@ class App extends Component {
     this.props.dispatch(handleInitialData())
   }
 
-  handleReturnFromLogin = () => {
-    console.log('Handle return from login');
+  handleReturnAfterLogin = (props) => {
+    console.log('APP handleReturnAfterLogin props = ', props);
+    const { state } = props.location
+    const url = !!state ? state : '/'
+    props.history.push(url)
+  }
+
+  handleReturnAfterLogout = () => {
+    console.log('Handle return from login logout');
   }
 
   handleReturnFromQuestion = ({ history }) => {
@@ -63,20 +70,16 @@ class App extends Component {
                 <Navigation authedUser={this.props.authedUser} username={name} avatarURL={avatarURL} handleLogout={this.handleLogout} />
                 <Switch>
                   <Route exact path='/' component={DashboardView} />
-                  <Route path='/login' render={({ history }) => (
+                  <Route path='/login' render={(props) =>
                     <LoginView
-                      handleReturn={() => {
-                        this.handleReturnFromLogin()
-                        history.push('/')
-                      }}
+                      handleReturnAfterLogin={() => { this.handleReturnAfterLogin(props) }}
                     />
-                  )} />
+                  } />
                   {/* <Route path='/questions/:id' component={QuestionView} /> */}
-                  <ProtectedRoute allowed={authedUser !== ''} path='/questions/:id' render={(props) => <QuestionView
-                    handleReturn={() => {
-                      this.handleReturnFromQuestion(props)
-                    }}
-                    {...props} />} />
+                  <ProtectedRoute allowed={authedUser !== ''} path='/questions/:id' render={(props) =>
+                    <QuestionView
+                      handleReturn={() => { this.handleReturnFromQuestion(props) }}
+                      {...props} />} />
                   <ProtectedRoute path='/new' allowed={authedUser !== ''} render={({ history }) => (
                     <NewQuestionView
                       handleReturn={(t1, t2) => {
@@ -88,7 +91,7 @@ class App extends Component {
                   )} />
                   <ProtectedRoute path='/leaderboard' allowed={authedUser !== ''} render={({ history }) => (
                     <LeaderboardView
-                      // users={users}
+                      users={users}
                       handleReturn={() => {
                         this.handleReturnFromLeaderboard()
                         history.push('/')

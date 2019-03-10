@@ -16,11 +16,6 @@ class Navigation extends Component {
     });
   }
 
-  getLinkClassName = () => {
-    const { authedUser } = this.props
-    return authedUser !== "" ? "nav-link" : "nav-link disabled"
-  }
-
   render() {
 
     const { authedUser, avatarURL, handleLogout, username } = this.props
@@ -47,7 +42,7 @@ class Navigation extends Component {
               {authedUser !== '' &&
                 <div>
                   <img
-                    src={avatartocircular(avatarURL)}
+                    src={`../${avatartocircular(avatarURL)}`}
                     alt={`Avatar of ${username}`}
                     width='30px'
                     height='30px'

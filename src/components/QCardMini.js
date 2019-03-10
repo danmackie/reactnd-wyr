@@ -47,11 +47,13 @@ const QCardMini = props => {
           </Button>
           :
           <Button
-            tag={Link}
-            to={`/login`}
-            outline color='info'
+            // tag={Link}
+            // to={`/login`}
+            // active={false}
+            disabled={true}
+          // outline color='info'
           >
-            Log in for votes
+            {answered ? `Log in to see votes` : `Log in to vote`}
           </Button>
         }
       </CardFooter>

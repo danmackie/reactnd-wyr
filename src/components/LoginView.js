@@ -16,15 +16,20 @@ class LoginView extends Component {
 
   handleLogin = (id) => {
     this.props.dispatch(setAuthedUser(id))
-    this.props.handleReturn()
+    this.props.handleReturnAfterLogin()
+  }
+
+  handleCancelLogin = () => {
+    this.props.handleReturnAfterLogin()
   }
 
   render() {
-    const { authedUser, users, handleReturn } = this.props
+    const { authedUser, users } = this.props
+
     return (
       <Row align='center'>
         <Col sm="12" md={{ size: 8, offset: 2 }}>
-          <Button onClick={handleReturn} close />
+          <Button onClick={this.handleCancelLogin} close />
           <h4>You can log as any of these users</h4>
           {authedUser === ''
             ? <CardDeck>
@@ -52,11 +57,11 @@ class LoginView extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, users }, { handleReturn }) {
+function mapStateToProps({ authedUser, users }, { handleReturnAfterLogin }) {
   return {
     authedUser,
     users,
-    handleReturn,
+    handleReturnAfterLogin,
   }
 }
 
